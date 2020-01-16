@@ -13,10 +13,15 @@ var scores, roundScore, activePlayer;
 
 scores = [0, 0];
 roundScore = 0;
-activePlayer = 1;
+activePlayer = 0;
 
 //document.querySelector("#current-" + activePlayer).textContent = dice;
 //var x = (document.querySelector("#current-" + activePlayer).textContent = dice);
+
+document.getElementById("score-0").textContent = "0";
+document.getElementById("score-1").textContent = "0";
+document.getElementById("current-0").textContent = "0";
+document.getElementById("current-1").textContent = "0";
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
 	//1. Random number
@@ -27,5 +32,20 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 	diceDom.style.dislay = ".block";
 	diceDom.src = "dice-" + dice + ".png";
 	//3. Update the round score IF 1 is NOT rolled
-	console.log(diceDom);
+	if (dice !== 1) {
+		//add score
+		roundScore += dice;
+		document.querySelector("#current-" + activePlayer).textContent = roundScore;
+	} else {
+		//Next player. using the turnery operator
+		activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+		roundScore = 0;
+		document.getElementById("current-0").textContent = "0";
+		document.getElementById("current-1").textContent = "0";
+		//document.querySelector(".player-0-panel").classList.remove("active");
+		//we can use add and remove but need more lines of code so use toggle
+
+		document.querySelector(".player-0-panel").classList.toggle("active");
+		document.querySelector(".player-1-panel").classList.toggle("active");
+	}
 });
