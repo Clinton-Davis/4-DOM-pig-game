@@ -38,14 +38,35 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 		document.querySelector("#current-" + activePlayer).textContent = roundScore;
 	} else {
 		//Next player. using the turnery operator
-		activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-		roundScore = 0;
-		document.getElementById("current-0").textContent = "0";
-		document.getElementById("current-1").textContent = "0";
-		//document.querySelector(".player-0-panel").classList.remove("active");
-		//we can use add and remove but need more lines of code so use toggle
-
-		document.querySelector(".player-0-panel").classList.toggle("active");
-		document.querySelector(".player-1-panel").classList.toggle("active");
+		nextPlayer();
 	}
 });
+
+document.querySelector(".btn-hold").addEventListener("click", function() {
+	// add current score to global score
+	scores[activePlayer] += roundScore;
+
+	//update the UI
+	document.querySelector("#score-" + activePlayer).textContent =
+		scores[activePlayer];
+	// Check if player has wone
+	if (scores[activePlayer] >= 100) {
+		document.querySelector("#name-" + activePlayer).textContent = "WINNER";
+		document.querySelector(".dice").style.dislay = "none";
+	} else {
+		//Next player
+		nextPlayer();
+	}
+});
+
+function nextPlayer() {
+	activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+	roundScore = 0;
+	document.getElementById("current-0").textContent = "0";
+	document.getElementById("current-1").textContent = "0";
+	//document.querySelector(".player-0-panel").classList.remove("active");
+	//we can use add and remove but need more lines of code so use toggle
+
+	document.querySelector(".player-0-panel").classList.toggle("active");
+	document.querySelector(".player-1-panel").classList.toggle("active");
+}
